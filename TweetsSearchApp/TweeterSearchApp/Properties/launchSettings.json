@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "TweeterSearchApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "TwitterConsumerSecret": "4hT7IaCtG4Qv8U1vggstttg9U3qLCMhWHKAgj7Sh0vm4gACiUy",
+        "TwitterAccessToken": "1166169861376159744-Z5Jkc1vBTigSRnElm21E9IjMdi1lC8",
+        "TwitterAccessTokenSecret": "njIjdoGfA5xgZ7gH42s2NmmYkSRYcuV8OrHfolw7skli4",
+        "TwitterConsumerKey": "laPH1piFLlAsnaOLMyC7T4idx"
+      }
+    }
+  }
+}
