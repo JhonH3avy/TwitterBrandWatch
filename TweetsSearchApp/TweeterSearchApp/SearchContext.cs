@@ -20,7 +20,8 @@ namespace TweeterSearchApp
                      search.IncludeEntities == true &&
                      search.TweetMode == TweetMode.Extended &&
                      search.Count == 100 &&
-                     search.SinceID == lastId
+                     search.SinceID == lastId &&
+                     search.SearchLanguage == "es"
                  select search)
                  .FirstOrDefaultAsync();
             var tweetList = new List<Tweet>();

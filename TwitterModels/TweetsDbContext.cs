@@ -9,7 +9,8 @@ namespace Twitter.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["Default"].ConnectionString);
+            //optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["Default"].ConnectionString);
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-AN4MSQE\SQLEXPRESS;Database=TweetDataWarehouse;Trusted_Connection=Yes");
         }
     }
 }

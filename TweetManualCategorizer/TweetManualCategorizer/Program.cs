@@ -11,8 +11,8 @@ namespace TweetManualCategorizer
         {
             using (var context = new TweetsDbContext())
             {
-                var uncategorizedTweets = context.Tweets.Where(tweet => tweet.Category != ServiceCategory.None);
-                if (uncategorizedTweets.Count() <= 0)
+                var uncategorizedTweets = context.Tweets.Where(tweet => tweet.Category == ServiceCategory.None).ToList();
+                if (uncategorizedTweets.Count <= 0)
                 {
                     return;
                 }
@@ -21,7 +21,7 @@ namespace TweetManualCategorizer
                     var category = ServiceCategory.None;
                     do
                     {
-                        Console.WriteLine($"");
+                        Console.WriteLine($"Tweet: {tweet.Text}");
                         Console.WriteLine($"\t0 - UserExperience");
                         Console.WriteLine($"\t1 - UserAttention");
                         Console.WriteLine($"\t2 - General");
@@ -34,7 +34,11 @@ namespace TweetManualCategorizer
                             break;
                         }
                         category = GetCategory(option);
-                    } while (category != ServiceCategory.None);
+                    } while (category == ServiceCategory.None);
+                    if (category == ServiceCategory.None)
+                    {
+                        break;
+                    }
                     tweet.Category = category;
                 }
                 context.SaveChanges();
