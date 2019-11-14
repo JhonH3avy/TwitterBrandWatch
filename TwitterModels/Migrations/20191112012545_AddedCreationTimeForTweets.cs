@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TweeterSearchApp.Migrations
+namespace Twitter.Migrations
 {
     public partial class AddedCreationTimeForTweets : Migration
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TweeterSearchApp.Migrations
+namespace Twitter.Migrations
 {
     public partial class AddedUnmapedFieldId : Migration
     {

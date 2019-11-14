@@ -6,6 +6,7 @@ namespace Twitter.Models
 {
     public enum ServiceCategory
     {
+        None,
         UserExperience,
         UserAttention,
         General,

@@ -1,25 +1,24 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using TweetManualCategorizer.Models;
+using Twitter.Models;
 
 namespace TweetManualCategorizer
 {
     class Program
     {
-        static async void Main(string[] args)
+        static void Main(string[] args)
         {
-            var checkpointData = await File.ReadAllTextAsync(@"LastCheckpoint.txt");
-            var lastCheckpoint = string.IsNullOrEmpty(checkpointData) ? DateTime.Now.AddDays(-7) : DateTime.Parse(checkpointData);
-            using (var context = new TweetDataWarehouseContext())
+            using (var context = new TweetsDbContext())
             {
-                var uncategorizedTweets = context.Tweets.Where(tweet => tweet.CreatedAt > lastCheckpoint);
+                var uncategorizedTweets = context.Tweets.Where(tweet => tweet.Category != ServiceCategory.None);
                 if (uncategorizedTweets.Count() <= 0)
                 {
                     return;
                 }
                 foreach (var tweet in uncategorizedTweets)
                 {
+                    var category = ServiceCategory.None;
                     do
                     {
                         Console.WriteLine($"");
@@ -27,10 +26,30 @@ namespace TweetManualCategorizer
                         Console.WriteLine($"\t1 - UserAttention");
                         Console.WriteLine($"\t2 - General");
                         Console.WriteLine($"\t3 - Tickets");
+                        Console.WriteLine($"\tQ - To quit application");
                         Console.WriteLine("Press the category this tweet fit on");
-                        var option = Console.ReadKey(true); 
-                    } while ();
+                        var option = Console.ReadKey(true);
+                        if (option.KeyChar == 'Q' || option.KeyChar == 'q')
+                        {
+                            break;
+                        }
+                        category = GetCategory(option);
+                    } while (category != ServiceCategory.None);
+                    tweet.Category = category;
                 }
+                context.SaveChanges();
+            }
+        }
+
+        private static ServiceCategory GetCategory(ConsoleKeyInfo option)
+        {
+            switch (option.KeyChar)
+            {
+                case '0': return ServiceCategory.UserExperience;
+                case '1': return ServiceCategory.UserAttention;
+                case '2': return ServiceCategory.General;
+                case '3': return ServiceCategory.Tickets;
+                default: return ServiceCategory.None;
             }
         }
     }
