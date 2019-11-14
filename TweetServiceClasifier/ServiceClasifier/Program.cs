@@ -3,25 +3,24 @@ using System.IO;
 using System.Linq;
 using Microsoft.ML;
 using ServiceClasifier.Models;
+using Twitter.Models;
 
 namespace ServiceClasifier
 {
     class Program
     {
         private static string _appPath => Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
-        private static string _trainDataPath => Path.Combine(_appPath, "..", "..", "..", "Data", "issues_train.tsv");
-        private static string _testDataPath => Path.Combine(_appPath, "..", "..", "..", "Data", "issues_test.tsv");
         private static string _modelPath => Path.Combine(_appPath, "..", "..", "..", "Models", "model.zip");
 
         private static MLContext _mlContext;
-        private static PredictionEngine<Tweets, TweetCategoryPrediction> _predEngine;
+        private static PredictionEngine<Tweet, TweetCategoryPrediction> _predEngine;
         private static ITransformer _trainedModel;
         static IDataView _trainingDataView;
 
         static void Main(string[] args)
         {
             _mlContext = new MLContext(seed: 0);
-            using (var contex = new TweetDataWarehouseContext())
+            using (var contex = new TweetsDbContext())
             {
                 _trainingDataView = _mlContext.Data.LoadFromEnumerable(contex.Tweets.ToList());
             }
@@ -46,8 +45,8 @@ namespace ServiceClasifier
             var trainingPipeline = pipeline.Append(_mlContext.MulticlassClassification.Trainers.SdcaMaximumEntropy("Label", "Features"))
                 .Append(_mlContext.Transforms.Conversion.MapKeyToValue("PredictedCategory"));
             _trainedModel = trainingPipeline.Fit(trainingDataView);
-            _predEngine = _mlContext.Model.CreatePredictionEngine<Tweets, TweetCategoryPrediction>(_trainedModel);
-            var tweet = new Tweets
+            _predEngine = _mlContext.Model.CreatePredictionEngine<Tweet, TweetCategoryPrediction>(_trainedModel);
+            var tweet = new Tweet
             {
                 Text = "Avianca es una aerolinea muy buena"
             };
@@ -72,14 +71,14 @@ namespace ServiceClasifier
 
         private static void SaveModelAsFile(MLContext mlContext, DataViewSchema trainingDataViewSchema, ITransformer model)
         {
-            //mlContext.Model.Save(model, trainingDataViewSchema, _modelPath);
+            mlContext.Model.Save(model, trainingDataViewSchema, _modelPath);
         }
 
         private static void PredictIssue()
         {
             ITransformer loadedModel = _mlContext.Model.Load(_modelPath, out var modelInputSchema);
-            var singleTweet = new Tweets() { Text = "Un avion de avianca se estrello" };
-            _predEngine = _mlContext.Model.CreatePredictionEngine<Tweets, TweetCategoryPrediction>(loadedModel);
+            var singleTweet = new Tweet() { Text = "Un avion de avianca se estrello" };
+            _predEngine = _mlContext.Model.CreatePredictionEngine<Tweet, TweetCategoryPrediction>(loadedModel);
             var prediction = _predEngine.Predict(singleTweet);
             Console.WriteLine($"=============== Single Prediction - Result: {prediction.Category} ===============");
         }

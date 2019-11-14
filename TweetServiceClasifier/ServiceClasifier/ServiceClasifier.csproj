@@ -15,12 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\issues_test.tsv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\issues_train.tsv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\..\TwitterModels\TwitterModels.csproj" />
   </ItemGroup>
 
 </Project>

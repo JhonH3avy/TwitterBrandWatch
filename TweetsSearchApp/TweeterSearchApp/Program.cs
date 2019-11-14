@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Twitter.Models;
 
 namespace TweeterSearchApp
 {
@@ -36,7 +37,7 @@ namespace TweeterSearchApp
             {
                 using (var context = new TweetsDbContext())
                 {
-                    lastTweetId = await context.Tweets.CountAsync() > 0 ? (ulong) await context.Tweets.MaxAsync(tweet => tweet.TweetId) : 0;
+                    lastTweetId = await context.Tweets.CountAsync() > 0 ? (ulong)await context.Tweets.MaxAsync(tweet => tweet.TweetId) : 0;
                     var tweets = await SearchContext.DoSearchAsync(twitterCtx, lastTweetId);
                     if (tweets.Count <= 0)
                     {

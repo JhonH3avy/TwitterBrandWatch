@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceClasifier", "TweetSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweeterSearchApp", "TweetsSearchApp\TweeterSearchApp\TweeterSearchApp.csproj", "{98429D8C-95DF-4A82-961A-2D458DEE4097}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterModels", "TwitterModels\TwitterModels.csproj", "{BD9F6A7E-025A-43DA-954A-2C033BE56A0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{98429D8C-95DF-4A82-961A-2D458DEE4097}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98429D8C-95DF-4A82-961A-2D458DEE4097}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98429D8C-95DF-4A82-961A-2D458DEE4097}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD9F6A7E-025A-43DA-954A-2C033BE56A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD9F6A7E-025A-43DA-954A-2C033BE56A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD9F6A7E-025A-43DA-954A-2C033BE56A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD9F6A7E-025A-43DA-954A-2C033BE56A0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

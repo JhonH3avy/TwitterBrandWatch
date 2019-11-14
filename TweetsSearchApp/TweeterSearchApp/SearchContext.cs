@@ -1,10 +1,8 @@
 ﻿using LinqToTwitter;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using TweeterSearchApp.Models;
+using Twitter.Models;
 
 namespace TweeterSearchApp
 {
